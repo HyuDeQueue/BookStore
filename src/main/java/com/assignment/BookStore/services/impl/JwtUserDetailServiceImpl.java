@@ -2,7 +2,7 @@ package com.assignment.BookStore.services.impl;
 
 import com.assignment.BookStore.models.User;
 import com.assignment.BookStore.repositories.UserRepository;
-import com.assignment.BookStore.schemas.jwt.CustomUserDetails;
+import com.assignment.BookStore.dtos.jwt.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

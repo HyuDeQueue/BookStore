@@ -1,6 +1,6 @@
 package com.assignment.BookStore.utils;
 
-import com.assignment.BookStore.schemas.jwt.CustomUserDetails;
+import com.assignment.BookStore.dtos.jwt.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

@@ -1,9 +1,9 @@
 package com.assignment.BookStore.services;
 
-import com.assignment.BookStore.schemas.requests.AuthRequestDTO;
-import com.assignment.BookStore.schemas.requests.UserRequestDTO;
-import com.assignment.BookStore.schemas.responses.AuthResponseDTO;
-import com.assignment.BookStore.schemas.responses.UserResponseDTO;
+import com.assignment.BookStore.dtos.requests.AuthRequestDTO;
+import com.assignment.BookStore.dtos.requests.UserRequestDTO;
+import com.assignment.BookStore.dtos.responses.AuthResponseDTO;
+import com.assignment.BookStore.dtos.responses.UserResponseDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
