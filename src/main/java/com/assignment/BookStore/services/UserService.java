@@ -5,6 +5,7 @@ import com.assignment.BookStore.dtos.requests.UserRequestDTO;
 import com.assignment.BookStore.dtos.responses.AuthResponseDTO;
 import com.assignment.BookStore.dtos.responses.UserResponseDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
