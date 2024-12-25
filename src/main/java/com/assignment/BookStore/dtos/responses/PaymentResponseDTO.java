@@ -18,7 +18,7 @@ public class PaymentResponseDTO {
     private String status;
     private String paymentDate;
 
-    public PaymentResponseDTO toDto(Payment payment) {
+    public static PaymentResponseDTO toDto(Payment payment) {
         return new PaymentResponseDTO(
                 payment.getId(),
                 payment.getOrderId(),

@@ -13,6 +13,8 @@ import com.assignment.BookStore.services.UserService;
 import com.assignment.BookStore.utils.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,7 +39,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponseDTO login(AuthRequestDTO authRequestDto) {
-        User user = userRepository.findByEmail(authRequestDto.getEmail());
+        User user = userRepository.findByEmail(authRequestDto.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,("User not found")));
         if (user == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,("User not found"));
         }
@@ -73,31 +76,47 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        return null;
+        return UserResponseDTO.toDto(userRepository.save(userRequestDTO.toEntity()));
     }
 
     @Override
-    public UserResponseDTO getUserById(UUID Id) {
-        return null;
+    public UserResponseDTO getUserById(String Id) {
+        return userRepository.findById(Id)
+                .map(UserResponseDTO::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     @Override
     public Page<UserResponseDTO> getAllUsers(int page, int limit) {
-        return null;
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(UserResponseDTO::toDto);
     }
 
     @Override
     public UserResponseDTO updateUser(String Id, UserRequestDTO userRequestDTO) {
-        return null;
+        User user = userRepository.findById(Id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPhone(userRequestDTO.getPhone());
+        user.setAddress(userRequestDTO.getAddress());
+        return UserResponseDTO.toDto(userRepository.save(user));
     }
 
     @Override
     public void deleteUser(String Id, String banned_reason) {
-
+        User user = userRepository.findById(Id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        user.setStatus("banned");
+        user.setBannedReason(banned_reason);
+        userRepository.save(user);
     }
 
     @Override
     public UserResponseDTO getUserByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email)
+                .map(UserResponseDTO::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 }

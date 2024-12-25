@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface UserService {
     AuthResponseDTO login(AuthRequestDTO authRequestDto);
     UserResponseDTO createUser(UserRequestDTO userRequestDTO);
-    UserResponseDTO getUserById(UUID Id);
+    UserResponseDTO getUserById(String Id);
     Page<UserResponseDTO> getAllUsers(int page, int limit);
     UserResponseDTO updateUser(String Id, UserRequestDTO userRequestDTO);
     void deleteUser(String Id, String banned_reason);

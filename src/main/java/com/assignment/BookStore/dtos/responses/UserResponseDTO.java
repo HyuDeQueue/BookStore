@@ -19,7 +19,7 @@ public class UserResponseDTO {
     private String createdAt;
     private String updatedAt;
 
-    public UserResponseDTO toDto(com.assignment.BookStore.entities.User user) {
+    public static UserResponseDTO toDto(com.assignment.BookStore.entities.User user) {
         return new UserResponseDTO(
                 user.getId(),
                 user.getName(),

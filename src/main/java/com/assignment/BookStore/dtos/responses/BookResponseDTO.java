@@ -24,7 +24,7 @@ public class BookResponseDTO {
     private String createdAt;
     private String updatedAt;
 
-    public BookResponseDTO toDto(Book book) {
+    public static BookResponseDTO toDto(Book book) {
         return new BookResponseDTO(
                 book.getId(),
                 book.getTitle(),

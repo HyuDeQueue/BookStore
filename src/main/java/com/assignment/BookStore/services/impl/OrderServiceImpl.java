@@ -2,37 +2,60 @@ package com.assignment.BookStore.services.impl;
 
 import com.assignment.BookStore.dtos.requests.OrderRequestDTO;
 import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
+import com.assignment.BookStore.entities.Order;
+import com.assignment.BookStore.repositories.OrderRepository;
 import com.assignment.BookStore.services.OrderService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @AllArgsConstructor
 
 public class OrderServiceImpl implements OrderService {
+    @Autowired
+    private OrderRepository orderRepository;
     @Override
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
-        return null;
+        return OrderResponseDTO.toDto(orderRepository.save(orderRequestDTO.toEntity()));
     }
 
     @Override
     public OrderResponseDTO getOrderById(String Id) {
-        return null;
+        return orderRepository.findById(Id)
+                .map(OrderResponseDTO::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
     }
 
     @Override
     public Page<OrderResponseDTO> getAllOrders(int page, int limit) {
-        return null;
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        return orders.map(OrderResponseDTO::toDto);
     }
 
     @Override
     public OrderResponseDTO updateOrder(String Id, OrderRequestDTO orderRequestDTO) {
-        return null;
+        Order order = orderRepository.findById(Id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        order.setUserId(orderRequestDTO.getUserId());
+        order.setTotalPrice(orderRequestDTO.getTotalPrice());
+        order.setStatus(orderRequestDTO.getStatus());
+        order.setCreatedAt(orderRequestDTO.getCreatedAt());
+        order.setUpdatedAt(orderRequestDTO.getUpdatedAt());
+        return OrderResponseDTO.toDto(orderRepository.save(order));
     }
 
     @Override
     public void deleteOrder(String Id) {
-
+        if(!orderRepository.existsById(Id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+        }
+        orderRepository.deleteById(Id);
     }
 }

@@ -11,7 +11,7 @@ public class AuthResponseDTO {
     private TokenDTO token;
     private UserResponseDTO user;
 
-    public AuthResponseDTO toDto(TokenDTO token, UserResponseDTO user) {
+    public static AuthResponseDTO toDto(TokenDTO token, UserResponseDTO user) {
         return new AuthResponseDTO(token, user);
     }
 }

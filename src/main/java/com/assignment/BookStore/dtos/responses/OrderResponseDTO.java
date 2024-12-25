@@ -24,7 +24,7 @@ public class OrderResponseDTO {
 
     private List<OrderDetail> orderDetails;
 
-    public OrderResponseDTO toDto(Order order) {
+    public static OrderResponseDTO toDto(Order order) {
         return new OrderResponseDTO(
                 order.getId(),
                 order.getUserId(),

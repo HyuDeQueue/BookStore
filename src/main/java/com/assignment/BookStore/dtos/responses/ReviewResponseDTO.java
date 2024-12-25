@@ -18,7 +18,7 @@ public class ReviewResponseDTO {
     private String comment;
     private String createdAt;
 
-    public ReviewResponseDTO toDto(com.assignment.BookStore.entities.Review review) {
+    public static ReviewResponseDTO toDto(com.assignment.BookStore.entities.Review review) {
         return new ReviewResponseDTO(
                 review.getId(),
                 review.getUserId(),
