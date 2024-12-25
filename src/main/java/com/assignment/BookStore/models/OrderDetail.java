@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class OrderDetail {
 
     private String bookId;
-    private int quantity;
-    private double price;
+    private Integer quantity;
+    private Integer price;
 }
 

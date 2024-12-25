@@ -17,12 +17,12 @@ public class Order {
     private String id;
 
     private String userId;
-    private double totalPrice;
-    private String status;  // (Pending, Completed, Canceled)
+    private Integer totalPrice;
+    private String status;
     private String createdAt;
     private String updatedAt;
 
-    private List<OrderDetail> orderDetails;  // Embedding OrderDetails
+    private List<OrderDetail> orderDetails;
 
 }
 

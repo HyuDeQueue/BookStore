@@ -17,10 +17,11 @@ public class Book {
 
     private String title;
     private String author;
-    private double price;
-    private int stock;
+    private Integer originalPrice;
+    private Integer currentPrice;
+    private Integer stock;
     private String description;
-    private String imageUrl;
+    private Byte[] imageData;
     private String category;
     private String createdAt;
     private String updatedAt;

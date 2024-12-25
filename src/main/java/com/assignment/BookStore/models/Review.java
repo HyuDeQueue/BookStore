@@ -16,7 +16,7 @@ public class Review {
 
     private String userId;
     private String bookId;
-    private int rating;  // (1-5 stars)
+    private Integer rating;
     private String comment;
     private String createdAt;
 }
