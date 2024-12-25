@@ -1,21 +1,22 @@
 package com.assignment.BookStore.dtos.requests;
 
 import com.assignment.BookStore.entities.Review;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class ReviewRequestDTO {
     private String userId;
     private String bookId;
     private Integer rating;
     private String comment;
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     public Review toEntity() {
         Review review = new Review();

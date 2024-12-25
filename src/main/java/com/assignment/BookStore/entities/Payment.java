@@ -3,6 +3,8 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "payments")
 @Data
 @NoArgsConstructor
@@ -17,6 +19,6 @@ public class Payment {
     private String orderId;
     private String transactionId;
     private String status;
-    private String paymentDate;
+    private LocalDateTime paymentDate;
 }
 

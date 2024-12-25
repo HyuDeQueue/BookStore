@@ -1,14 +1,15 @@
 package com.assignment.BookStore.dtos.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class ReviewResponseDTO {
     private String id;
 
@@ -16,7 +17,7 @@ public class ReviewResponseDTO {
     private String bookId;
     private Integer rating;
     private String comment;
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     public static ReviewResponseDTO toDto(com.assignment.BookStore.entities.Review review) {
         return new ReviewResponseDTO(

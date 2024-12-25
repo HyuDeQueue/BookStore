@@ -1,15 +1,16 @@
 package com.assignment.BookStore.dtos.requests;
 
 import com.assignment.BookStore.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
 public class UserRequestDTO {
 
     private String name;
@@ -18,8 +19,8 @@ public class UserRequestDTO {
     private String role;
     private String phone;
     private String address;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String status;
     private String bannedReason;
 

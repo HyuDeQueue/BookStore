@@ -1,15 +1,16 @@
 package com.assignment.BookStore.dtos.responses;
 
 import com.assignment.BookStore.entities.Book;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class BookResponseDTO {
     private String id;
 
@@ -21,8 +22,8 @@ public class BookResponseDTO {
     private String description;
     private Byte[] imageData;
     private String category;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static BookResponseDTO toDto(Book book) {
         return new BookResponseDTO(

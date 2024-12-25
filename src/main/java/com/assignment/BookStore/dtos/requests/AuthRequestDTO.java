@@ -1,15 +1,14 @@
 package com.assignment.BookStore.dtos.requests;
 
 import com.assignment.BookStore.entities.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class AuthRequestDTO {
     private String email;
     private String password;

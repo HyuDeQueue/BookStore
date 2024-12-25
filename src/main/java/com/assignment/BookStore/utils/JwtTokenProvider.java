@@ -1,6 +1,6 @@
 package com.assignment.BookStore.utils;
 
-import com.assignment.BookStore.dtos.jwt.CustomUserDetails;
+import com.assignment.BookStore.dtos.jwt.CustomUserDetailsDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ public class JwtTokenProvider {
     @Value("${app.jwt-expiration-milliseconds}")
     private long jwtExpirationDate; // Changed to long
 
-    public String generateToken(CustomUserDetails authentication) {
+    public String generateToken(CustomUserDetailsDTO authentication) {
         String username = authentication.getUsername();
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);

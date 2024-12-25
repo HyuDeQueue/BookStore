@@ -3,7 +3,7 @@ package com.assignment.BookStore.services.impl;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.assignment.BookStore.entities.User;
 import com.assignment.BookStore.repositories.UserRepository;
-import com.assignment.BookStore.dtos.jwt.CustomUserDetails;
+import com.assignment.BookStore.dtos.jwt.CustomUserDetailsDTO;
 import com.assignment.BookStore.dtos.jwt.TokenDTO;
 import com.assignment.BookStore.dtos.requests.AuthRequestDTO;
 import com.assignment.BookStore.dtos.requests.UserRequestDTO;
@@ -22,8 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtTokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
+        String token = jwtTokenProvider.generateToken((CustomUserDetailsDTO) authentication.getPrincipal());
         AuthResponseDTO authResponseDto = new AuthResponseDTO();
 
         UserResponseDTO userResponseDTO = new UserResponseDTO();

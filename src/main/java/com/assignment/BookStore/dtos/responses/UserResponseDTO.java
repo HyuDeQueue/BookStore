@@ -1,14 +1,15 @@
 package com.assignment.BookStore.dtos.responses;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class UserResponseDTO {
     private String id;
     private String name;
@@ -16,8 +17,8 @@ public class UserResponseDTO {
     private String role;
     private String phone;
     private String address;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static UserResponseDTO toDto(com.assignment.BookStore.entities.User user) {
         return new UserResponseDTO(

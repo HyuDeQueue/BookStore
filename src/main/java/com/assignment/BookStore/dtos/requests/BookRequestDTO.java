@@ -1,15 +1,16 @@
 package com.assignment.BookStore.dtos.requests;
 
 import com.assignment.BookStore.entities.Book;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class BookRequestDTO {
     private String title;
     private String author;
@@ -19,8 +20,8 @@ public class BookRequestDTO {
     private String description;
     private Byte[] imageData;
     private String category;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Book toEntity() {
         Book book = new Book();

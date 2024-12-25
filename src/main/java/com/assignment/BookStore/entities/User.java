@@ -3,12 +3,15 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @Document(collection = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User {
 
     @Id
@@ -20,8 +23,8 @@ public class User {
     private String role;
     private String phone;
     private String address;
-    private String createdAt;
-    private String updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String status;
     private String bannedReason;
 }

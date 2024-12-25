@@ -7,6 +7,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class AuthResponseDTO {
     private TokenDTO token;
     private UserResponseDTO user;
