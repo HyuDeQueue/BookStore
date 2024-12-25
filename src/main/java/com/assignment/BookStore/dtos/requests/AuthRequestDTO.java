@@ -1,4 +1,4 @@
-package com.assignment.BookStore.schemas.responses;
+package com.assignment.BookStore.dtos.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,5 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponseDTO {
+public class AuthRequestDTO {
+    private String email;
+    private String password;
 }

@@ -1,4 +1,4 @@
-package com.assignment.BookStore.schemas.requests;
+package com.assignment.BookStore.dtos.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,5 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookRequestDTO {
+public class OrderDetailRequestDTO {
+    private String bookId;
+    private Integer quantity;
+    private Integer price;
 }

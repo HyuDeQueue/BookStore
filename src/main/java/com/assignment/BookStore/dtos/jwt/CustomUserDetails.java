@@ -1,4 +1,4 @@
-package com.assignment.BookStore.schemas.jwt;
+package com.assignment.BookStore.dtos.jwt;
 
 import com.assignment.BookStore.models.User;
 import lombok.AllArgsConstructor;

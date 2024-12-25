@@ -1,6 +1,6 @@
-package com.assignment.BookStore.schemas.responses;
+package com.assignment.BookStore.dtos.responses;
 
-import com.assignment.BookStore.schemas.jwt.TokenDTO;
+import com.assignment.BookStore.dtos.jwt.TokenDTO;
 import lombok.*;
 
 @Getter

@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 public class OrderDetail {
-
     private String bookId;
     private Integer quantity;
     private Integer price;

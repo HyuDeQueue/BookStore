@@ -1,4 +1,4 @@
-package com.assignment.BookStore.schemas.requests;
+package com.assignment.BookStore.dtos.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,4 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentRequestDTO {
+    private String orderId;
+    private String transactionId;
+    private String status;
+    private String paymentDate;
 }

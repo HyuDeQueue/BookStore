@@ -1,4 +1,4 @@
-package com.assignment.BookStore.schemas.responses;
+package com.assignment.BookStore.dtos.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,5 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookResponseDTO {
+public class TokenDTO {
+
+    private String token;
+    private final String type = "Bearer";
 }
