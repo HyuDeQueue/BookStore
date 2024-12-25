@@ -23,7 +23,7 @@ public class OpenAPIConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("Voting Management API")
+                .info(new Info().title("Bookstore API")
                         .description("Production API.")
                         .version("1.0").contact(new Contact().name("Đặng Quang Huy")
                                 .email( "Quanghuy01062004@gmail.com")));
