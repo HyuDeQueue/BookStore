@@ -13,4 +13,5 @@ public class OrderDetailRequestDTO {
     private String bookId;
     private Integer quantity;
     private Integer price;
+    //Currently keep
 }

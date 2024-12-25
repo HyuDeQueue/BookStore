@@ -13,4 +13,5 @@ public class OrderDetailResponseDTO {
     private String bookId;
     private Integer quantity;
     private Integer price;
+    //keeping it, not in use
 }

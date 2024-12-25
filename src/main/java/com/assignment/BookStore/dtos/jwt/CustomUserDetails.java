@@ -1,6 +1,6 @@
 package com.assignment.BookStore.dtos.jwt;
 
-import com.assignment.BookStore.models.User;
+import com.assignment.BookStore.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

@@ -18,4 +18,17 @@ public class UserResponseDTO {
     private String address;
     private String createdAt;
     private String updatedAt;
+
+    public UserResponseDTO toDto(com.assignment.BookStore.entities.User user) {
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole(),
+                user.getPhone(),
+                user.getAddress(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
+    }
 }

@@ -1,7 +1,7 @@
 package com.assignment.BookStore.services.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.assignment.BookStore.models.User;
+import com.assignment.BookStore.entities.User;
 import com.assignment.BookStore.repositories.UserRepository;
 import com.assignment.BookStore.dtos.jwt.CustomUserDetails;
 import com.assignment.BookStore.dtos.jwt.TokenDTO;

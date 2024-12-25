@@ -1,5 +1,6 @@
 package com.assignment.BookStore.dtos.responses;
 
+import com.assignment.BookStore.entities.Payment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,14 @@ public class PaymentResponseDTO {
     private String transactionId;
     private String status;
     private String paymentDate;
+
+    public PaymentResponseDTO toDto(Payment payment) {
+        return new PaymentResponseDTO(
+                payment.getId(),
+                payment.getOrderId(),
+                payment.getTransactionId(),
+                payment.getStatus(),
+                payment.getPaymentDate()
+        );
+    }
 }

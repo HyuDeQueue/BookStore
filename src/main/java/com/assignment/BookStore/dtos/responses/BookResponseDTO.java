@@ -1,5 +1,6 @@
 package com.assignment.BookStore.dtos.responses;
 
+import com.assignment.BookStore.entities.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,20 @@ public class BookResponseDTO {
     private String category;
     private String createdAt;
     private String updatedAt;
+
+    public BookResponseDTO toDto(Book book) {
+        return new BookResponseDTO(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getOriginalPrice(),
+                book.getCurrentPrice(),
+                book.getStock(),
+                book.getDescription(),
+                book.getImageData(),
+                book.getCategory(),
+                book.getCreatedAt(),
+                book.getUpdatedAt()
+        );
+    }
 }

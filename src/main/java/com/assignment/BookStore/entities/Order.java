@@ -1,4 +1,4 @@
-package com.assignment.BookStore.models;
+package com.assignment.BookStore.entities;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
