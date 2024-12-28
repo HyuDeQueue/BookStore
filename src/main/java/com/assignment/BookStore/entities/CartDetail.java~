@@ -1,0 +1,12 @@
+package com.assignment.BookStore.entities;
+
+import lombok.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class CartDetail {
+    private String bookId;
+}
