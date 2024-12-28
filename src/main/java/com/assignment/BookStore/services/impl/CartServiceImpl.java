@@ -77,17 +77,16 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartResponseDTO clearCart(String userId) {
+    public void clearCart(String userId) {
         Optional<Cart> existingCart = cartRepository.findById(userId);
 
         if (existingCart.isPresent()) {
             Cart cart = existingCart.get();
             cart.setOrderDetails(List.of());
             cartRepository.save(cart);
-            return CartResponseDTO.toDto(cart);
+            CartResponseDTO.toDto(cart);
         }
 
-        return null;
     }
 
     @Override
