@@ -32,9 +32,9 @@ public class SecurityConfig{
 
     @Bean
     public PayOS payOS(
-            @Value("${payos.clientId}") String clientId,
-            @Value("${payos.apiKey}") String apiKey,
-            @Value("${payos.checksumKey}") String checksumKey
+            @Value("${PAYOS_CLIENT_ID}") String clientId,
+            @Value("${PAYOS_API_KEY}") String apiKey,
+            @Value("${PAYOS_CHECKSUM_KEY}") String checksumKey
     ) {
         return new PayOS(clientId, apiKey, checksumKey);
     }

@@ -3,6 +3,7 @@ package com.assignment.BookStore.controllers;
 import com.assignment.BookStore.entities.OrderDetail;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -17,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-
+@RequestMapping("/api/payOs")
+@CrossOrigin("*")
 public class PayOSController {
     private final PayOS payOS;
 
