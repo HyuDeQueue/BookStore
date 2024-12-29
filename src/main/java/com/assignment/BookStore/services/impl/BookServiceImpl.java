@@ -52,7 +52,6 @@ public class BookServiceImpl implements BookService {
         book.setDescription(bookRequestDTO.getDescription());
         book.setImageData(bookRequestDTO.getImageData());
         book.setCategory(bookRequestDTO.getCategory());
-        book.setUpdatedAt(bookRequestDTO.getUpdatedAt());
         return BookResponseDTO.toDto(bookRepository.save(book));
     }
 

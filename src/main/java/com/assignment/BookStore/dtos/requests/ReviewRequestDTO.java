@@ -16,7 +16,6 @@ public class ReviewRequestDTO {
     private String bookId;
     private Integer rating;
     private String comment;
-    private LocalDateTime createdAt;
 
     public Review toEntity() {
         Review review = new Review();
@@ -24,7 +23,6 @@ public class ReviewRequestDTO {
         review.setBookId(this.bookId);
         review.setRating(this.rating);
         review.setComment(this.comment);
-        review.setCreatedAt(this.createdAt);
         return review;
     }
 }

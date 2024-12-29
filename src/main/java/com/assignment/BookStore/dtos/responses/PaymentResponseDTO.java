@@ -16,7 +16,9 @@ public class PaymentResponseDTO {
 
     private String orderId;
     private String transactionId;
+    private String userId;
     private String status;
+    private Integer amount;
     private LocalDateTime paymentDate;
 
     public static PaymentResponseDTO toDto(Payment payment) {
@@ -24,7 +26,9 @@ public class PaymentResponseDTO {
                 payment.getId(),
                 payment.getOrderId(),
                 payment.getTransactionId(),
+                payment.getUserId(),
                 payment.getStatus(),
+                payment.getAmount(),
                 payment.getPaymentDate()
         );
     }

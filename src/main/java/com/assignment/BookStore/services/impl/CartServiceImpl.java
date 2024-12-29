@@ -1,11 +1,13 @@
 package com.assignment.BookStore.services.impl;
 
 import com.assignment.BookStore.dtos.requests.CartRequestDTO;
+import com.assignment.BookStore.dtos.requests.OrderRequestDTO;
 import com.assignment.BookStore.dtos.responses.CartResponseDTO;
 import com.assignment.BookStore.entities.Cart;
 import com.assignment.BookStore.entities.OrderDetail;
 import com.assignment.BookStore.repositories.CartRepository;
 import com.assignment.BookStore.services.CartService;
+import com.assignment.BookStore.services.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private OrderService orderService;
 
     @Override
     public CartResponseDTO addToCart(String userId, String bookId) {
@@ -123,9 +127,14 @@ public class CartServiceImpl implements CartService {
             List<OrderDetail> remainingOrderDetails = currentOrderDetails.stream()
                     .filter(detail -> checkoutOrderDetails.stream().noneMatch(toCheckout -> toCheckout.getBookId().equals(detail.getBookId())))
                     .collect(Collectors.toList());
-//Function not finished here
             cart.setOrderDetails(remainingOrderDetails);
             cartRepository.save(cart);
+
+            OrderRequestDTO orderRequestDTO = new OrderRequestDTO();
+            orderRequestDTO.setUserId(userId);
+            orderRequestDTO.setOrderDetails(checkoutOrderDetails);
+            orderService.createOrder(orderRequestDTO);
+
         }
     }
 }

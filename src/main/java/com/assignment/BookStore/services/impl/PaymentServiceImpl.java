@@ -44,8 +44,6 @@ public class PaymentServiceImpl implements PaymentService {
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment not found"));
         payment.setOrderId(paymentRequestDTO.getOrderId());
         payment.setTransactionId(paymentRequestDTO.getTransactionId());
-        payment.setStatus(paymentRequestDTO.getStatus());
-        payment.setPaymentDate(paymentRequestDTO.getPaymentDate());
         return PaymentResponseDTO.toDto(paymentRepository.save(payment));
     }
 

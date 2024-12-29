@@ -45,9 +45,6 @@ public class OrderServiceImpl implements OrderService {
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
         order.setUserId(orderRequestDTO.getUserId());
         order.setTotalPrice(orderRequestDTO.getTotalPrice());
-        order.setStatus(orderRequestDTO.getStatus());
-        order.setCreatedAt(orderRequestDTO.getCreatedAt());
-        order.setUpdatedAt(orderRequestDTO.getUpdatedAt());
         return OrderResponseDTO.toDto(orderRepository.save(order));
     }
 

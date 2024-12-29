@@ -14,15 +14,15 @@ import java.time.LocalDateTime;
 public class PaymentRequestDTO {
     private String orderId;
     private String transactionId;
-    private String status;
-    private LocalDateTime paymentDate;
+    private String userId;
+    private Integer amount;
 
     public Payment toEntity() {
         Payment payment = new Payment();
         payment.setOrderId(this.orderId);
         payment.setTransactionId(this.transactionId);
-        payment.setStatus(this.status);
-        payment.setPaymentDate(this.paymentDate);
+        payment.setUserId(this.userId);
+        payment.setAmount(this.amount);
         return payment;
     }
 }

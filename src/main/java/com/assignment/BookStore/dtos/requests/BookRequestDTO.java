@@ -20,8 +20,6 @@ public class BookRequestDTO {
     private String description;
     private Byte[] imageData;
     private String category;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public Book toEntity() {
         Book book = new Book();
@@ -33,8 +31,6 @@ public class BookRequestDTO {
         book.setDescription(this.description);
         book.setImageData(this.imageData);
         book.setCategory(this.category);
-        book.setCreatedAt(this.createdAt);
-        book.setUpdatedAt(this.updatedAt);
         return book;
     }
 }
