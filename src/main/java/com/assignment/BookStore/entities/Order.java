@@ -20,7 +20,7 @@ public class Order {
     private String userId;
     private Integer totalPrice;
     private String status;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 
     private List<OrderDetail> orderDetails;

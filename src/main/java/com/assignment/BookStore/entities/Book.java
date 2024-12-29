@@ -25,7 +25,7 @@ public class Book {
     private String description;
     private Byte[] imageData;
     private String category;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 }
 

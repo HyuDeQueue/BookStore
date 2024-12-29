@@ -21,6 +21,6 @@ public class Payment {
     private String userId;
     private Integer amount;
     private String status;
-    private LocalDateTime paymentDate = LocalDateTime.now();
+    private LocalDateTime paymentDate;
 }
 

@@ -20,6 +20,6 @@ public class Review {
     private String bookId;
     private Integer rating;
     private String comment;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
 
