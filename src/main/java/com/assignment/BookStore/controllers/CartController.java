@@ -44,9 +44,5 @@ public class CartController {
     private void checkout(@PathVariable String userId, @RequestBody CartRequestDTO cartRequestDTO) {
         cartService.checkout(userId, cartRequestDTO);
     }
-
-
-
-
 }
 
