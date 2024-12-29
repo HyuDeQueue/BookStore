@@ -15,7 +15,6 @@ public class CreateUserRequestDTO {
     private String name;
     private String email;
     private String password;
-    private String role;
     private String phone;
     private String address;
 
@@ -24,7 +23,6 @@ public class CreateUserRequestDTO {
         user.setName(this.name);
         user.setEmail(this.email);
         user.setPassword(this.password);
-        user.setRole(this.role);
         user.setPhone(this.phone);
         user.setAddress(this.address);
         return user;

@@ -75,7 +75,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO createUser(CreateUserRequestDTO createUserRequestDTO) {
-        return UserResponseDTO.toDto(userRepository.save(createUserRequestDTO.toEntity()));
+        createUserRequestDTO.setPassword(BCrypt.withDefaults().hashToString(12, createUserRequestDTO.getPassword().toCharArray()));
+        User user = createUserRequestDTO.toEntity();
+        user.setStatus("active");
+        user.setRole("user");
+        return UserResponseDTO.toDto(userRepository.save(user));
     }
 
     @Override
