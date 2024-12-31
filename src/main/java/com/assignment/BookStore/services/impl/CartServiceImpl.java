@@ -10,8 +10,14 @@ import com.assignment.BookStore.services.CartService;
 import com.assignment.BookStore.services.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import vn.payos.PayOS;
+import vn.payos.type.CheckoutResponseData;
+import vn.payos.type.PaymentData;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,6 +30,8 @@ public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private final PayOS payOS;
 
     @Override
     public CartResponseDTO addToCart(String userId, String bookId) {
@@ -75,9 +83,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponseDTO getCart(String userId) {
-        Optional<Cart> existingCart = cartRepository.findById(userId);
-
-        return existingCart.map(CartResponseDTO::toDto).orElse(null);
+        Cart existingCart = cartRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        return CartResponseDTO.toDto(existingCart);
     }
 
     @Override
@@ -116,7 +124,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void checkout(String userId, CartRequestDTO cartRequestDTO) {
+    public CheckoutResponseData initiateCheckout(String userId, CartRequestDTO cartRequestDTO) throws Exception {
         Optional<Cart> existingCart = cartRepository.findById(userId);
 
         if (existingCart.isPresent()) {
@@ -124,17 +132,56 @@ public class CartServiceImpl implements CartService {
             List<OrderDetail> currentOrderDetails = cart.getOrderDetails();
             List<OrderDetail> checkoutOrderDetails = cartRequestDTO.getOrderDetails();
 
+            // Calculate total price
+            int totalPrice = checkoutOrderDetails.stream()
+                    .mapToInt(toCheckout -> toCheckout.getPrice() * toCheckout.getQuantity())
+                    .sum();
+
+            // Generate payment data
+            final String description = "Thanh toán đơn hàng";
+            final String returnUrl = "http://localhost:3000/payment/success";
+            final String cancelUrl = "http://localhost:3000/payment/cancel";
+            String currentTimeString = String.valueOf(new Date().getTime());
+            long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
+
+            PaymentData paymentData = PaymentData.builder()
+                    .orderCode(orderCode)
+                    .description(description)
+                    .amount(totalPrice)
+                    .returnUrl(returnUrl)
+                    .cancelUrl(cancelUrl)
+                    .build();
+
+            return payOS.createPaymentLink(paymentData);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart is invalid");
+        }
+    }
+
+    @Override
+    public void processPostPayment(String userId, List<OrderDetail> checkoutOrderDetails) {
+        Optional<Cart> existingCart = cartRepository.findById(userId);
+
+        if (existingCart.isPresent()) {
+            Cart cart = existingCart.get();
+            List<OrderDetail> currentOrderDetails = cart.getOrderDetails();
+
             List<OrderDetail> remainingOrderDetails = currentOrderDetails.stream()
-                    .filter(detail -> checkoutOrderDetails.stream().noneMatch(toCheckout -> toCheckout.getBookId().equals(detail.getBookId())))
+                    .filter(detail -> checkoutOrderDetails.stream()
+                            .noneMatch(toCheckout -> toCheckout.getBookId().equals(detail.getBookId())))
                     .collect(Collectors.toList());
+
             cart.setOrderDetails(remainingOrderDetails);
             cartRepository.save(cart);
 
+            // Create order
             OrderRequestDTO orderRequestDTO = new OrderRequestDTO();
             orderRequestDTO.setUserId(userId);
             orderRequestDTO.setOrderDetails(checkoutOrderDetails);
             orderService.createOrder(orderRequestDTO);
-
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart is invalid");
         }
     }
+
 }

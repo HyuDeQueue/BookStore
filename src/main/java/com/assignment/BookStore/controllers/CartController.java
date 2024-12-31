@@ -40,9 +40,9 @@ public class CartController {
         cartService.clearCart(userId);
     }
 
-    @PostMapping("/checkout/{userId}")
-    private void checkout(@PathVariable String userId, @RequestBody CartRequestDTO cartRequestDTO) {
-        cartService.checkout(userId, cartRequestDTO);
-    }
+//    @PostMapping("/checkout/{userId}")
+//    private void checkout(@PathVariable String userId, @RequestBody CartRequestDTO cartRequestDTO) {
+//        cartService.checkout(userId, cartRequestDTO);
+//    }
 }
 
