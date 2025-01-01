@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Base64;
+
 @Service
 @AllArgsConstructor
 
@@ -50,7 +52,7 @@ public class BookServiceImpl implements BookService {
         book.setCurrentPrice(bookRequestDTO.getCurrentPrice());
         book.setStock(bookRequestDTO.getStock());
         book.setDescription(bookRequestDTO.getDescription());
-        book.setImageData(bookRequestDTO.getImageData());
+        book.setImageData(Base64.getDecoder().decode(bookRequestDTO.getImageData()));
         book.setCategory(bookRequestDTO.getCategory());
         return BookResponseDTO.toDto(bookRepository.save(book));
     }
