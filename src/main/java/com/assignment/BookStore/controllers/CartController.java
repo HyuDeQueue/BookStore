@@ -28,8 +28,8 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    private ResponseEntity<List<CartResponseDTO>> getCart(@PathVariable String userId) {
-        return ResponseEntity.ok(cartService.getCarts(userId));
+    private ResponseEntity<CartResponseDTO> getCart(@PathVariable String userId) {
+        return ResponseEntity.ok(cartService.getCart(userId));
     }
 
     @PutMapping("/update/{userId}/{bookId}")

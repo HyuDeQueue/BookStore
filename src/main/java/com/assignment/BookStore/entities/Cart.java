@@ -18,4 +18,5 @@ public class Cart {
 
     private String userId;
     private List<OrderDetail> orderDetails;
+
 }
