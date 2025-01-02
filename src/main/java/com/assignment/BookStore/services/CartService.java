@@ -13,7 +13,7 @@ public interface CartService {
 
     public CartResponseDTO removeFromCart(String userId, String bookId);
 
-    public CartResponseDTO getCart(String userId);
+    public List<CartResponseDTO> getCarts(String userId);
 
     public void clearCart(String userId);
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/cart")
@@ -26,8 +28,8 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    private ResponseEntity<CartResponseDTO> getCart(@PathVariable String userId) {
-        return ResponseEntity.ok(cartService.getCart(userId));
+    private ResponseEntity<List<CartResponseDTO>> getCart(@PathVariable String userId) {
+        return ResponseEntity.ok(cartService.getCarts(userId));
     }
 
     @PutMapping("/update/{userId}/{bookId}")
