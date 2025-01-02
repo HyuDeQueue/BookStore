@@ -101,7 +101,7 @@ public class CartServiceImpl implements CartService {
     public void clearCart(String userId) {
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
-        
+
         cart.setOrderDetails(List.of());
         cartRepository.save(cart);
     }

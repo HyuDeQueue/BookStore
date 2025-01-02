@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 
@@ -33,11 +35,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDTO> GetOrdersByUserId(String userId) {
+        return orderRepository.findByUserId(userId)
+                .stream().map(OrderResponseDTO::toDto)
+                .toList();
+    }
+
+    @Override
     public Page<OrderResponseDTO> getAllOrders(int page, int limit) {
         Pageable pageable = PageRequest.of(page, limit);
         Page<Order> orders = orderRepository.findAll(pageable);
         return orders.map(OrderResponseDTO::toDto);
     }
+
+
 
     @Override
     public OrderResponseDTO updateOrder(String Id, OrderRequestDTO orderRequestDTO) {

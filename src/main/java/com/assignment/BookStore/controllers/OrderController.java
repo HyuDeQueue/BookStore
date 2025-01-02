@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/order")
@@ -43,5 +45,10 @@ public class OrderController {
     @DeleteMapping("/{Id}")
     private void deleteOrder(@PathVariable String Id) {
         orderService.deleteOrder(Id);
+    }
+
+    @GetMapping("/user/{userId}")
+    private ResponseEntity<List<OrderResponseDTO>> getOrdersByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(orderService.GetOrdersByUserId(userId));
     }
 }
