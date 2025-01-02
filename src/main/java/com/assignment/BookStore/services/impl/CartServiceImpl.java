@@ -47,6 +47,7 @@ public class CartServiceImpl implements CartService {
             BookResponseDTO book = bookService.getBookById(bookId);
             cart.setOrderDetails(List.of(new OrderDetail(bookId, 1, book.getCurrentPrice())));
             cartRepository.save(cart);
+            return CartResponseDTO.toDto(cart);
         }
         Cart cart = cartRepository.findByUserId(userId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
