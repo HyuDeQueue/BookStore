@@ -83,8 +83,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponseDTO getCart(String userId) {
-        Cart existingCart = cartRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+        Cart existingCart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User cart was not created, please put something inside"));
         return CartResponseDTO.toDto(existingCart);
     }
 
