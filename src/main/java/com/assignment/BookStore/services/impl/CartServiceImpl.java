@@ -4,10 +4,13 @@ import com.assignment.BookStore.dtos.requests.CartRequestDTO;
 import com.assignment.BookStore.dtos.requests.OrderRequestDTO;
 import com.assignment.BookStore.dtos.responses.BookResponseDTO;
 import com.assignment.BookStore.dtos.responses.CartResponseDTO;
+import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
 import com.assignment.BookStore.entities.Book;
 import com.assignment.BookStore.entities.Cart;
+import com.assignment.BookStore.entities.Order;
 import com.assignment.BookStore.entities.OrderDetail;
 import com.assignment.BookStore.repositories.CartRepository;
+import com.assignment.BookStore.repositories.OrderRepository;
 import com.assignment.BookStore.services.BookService;
 import com.assignment.BookStore.services.CartService;
 import com.assignment.BookStore.services.OrderService;
@@ -37,6 +40,8 @@ public class CartServiceImpl implements CartService {
     private OrderService orderService;
     @Autowired
     private final PayOS payOS;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     public CartResponseDTO addToCart(String userId, String bookId) {
@@ -134,7 +139,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CheckoutResponseData initiateCheckout(String userId, CartRequestDTO cartRequestDTO) throws Exception {
+    public OrderResponseDTO initiateCheckout(String userId, CartRequestDTO cartRequestDTO) throws Exception {
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
@@ -142,32 +147,34 @@ public class CartServiceImpl implements CartService {
         int totalPrice = checkoutOrderDetails.stream()
                 .mapToInt(detail -> detail.getPrice() * detail.getQuantity())
                 .sum();
-
-        PaymentData paymentData = PaymentData.builder()
-                .orderCode(System.currentTimeMillis())
-                .description("Thanh toán đơn hàng")
-                .amount(totalPrice)
-                .returnUrl("http://localhost:3000/payment/success")
-                .cancelUrl("http://localhost:3000/payment/cancel")
-                .build();
-
-        return payOS.createPaymentLink(paymentData);
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setTotalPrice(totalPrice);
+        order.setOrderDetails(checkoutOrderDetails);
+        order.setStatus("Created");
+        orderRepository.save(order);
+        return OrderResponseDTO.toDto(order);
     }
 
     @Override
-    public void processPostPayment(String userId, List<OrderDetail> checkoutOrderDetails) {
-        Cart cart = cartRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    public void processPostPayment(String userId, CartRequestDTO cartRequestDTO) {
+        
+    }
 
-        List<OrderDetail> remainingOrderDetails = cart.getOrderDetails().stream()
-                .filter(detail -> checkoutOrderDetails.stream()
-                        .noneMatch(toCheckout -> toCheckout.getBookId().equals(detail.getBookId())))
-                .collect(Collectors.toList());
-
-        cart.setOrderDetails(remainingOrderDetails);
-        cartRepository.save(cart);
+//    @Override
+//    public void processPostPayment(String userId, List<OrderDetail> checkoutOrderDetails) {
+//        Cart cart = cartRepository.findByUserId(userId)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+//
+//        List<OrderDetail> remainingOrderDetails = cart.getOrderDetails().stream()
+//                .filter(detail -> checkoutOrderDetails.stream()
+//                        .noneMatch(toCheckout -> toCheckout.getBookId().equals(detail.getBookId())))
+//                .collect(Collectors.toList());
+//
+//        cart.setOrderDetails(remainingOrderDetails);
+//        cartRepository.save(cart);
 
 //        OrderRequestDTO orderRequestDTO = new OrderRequestDTO(userId, checkoutOrderDetails);
 //        orderService.createOrder(orderRequestDTO);
-    }
 }
+

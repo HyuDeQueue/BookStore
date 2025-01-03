@@ -2,6 +2,7 @@ package com.assignment.BookStore.services;
 
 import com.assignment.BookStore.dtos.requests.CartRequestDTO;
 import com.assignment.BookStore.dtos.responses.CartResponseDTO;
+import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
 import com.assignment.BookStore.entities.OrderDetail;
 import vn.payos.type.CheckoutResponseData;
 
@@ -19,7 +20,7 @@ public interface CartService {
 
     public CartResponseDTO updateCart(String userId, String bookId, Integer quantity);
 
-    public CheckoutResponseData initiateCheckout(String userId, CartRequestDTO cartRequestDTO) throws Exception;
+    public OrderResponseDTO initiateCheckout(String userId, CartRequestDTO cartRequestDTO) throws Exception;
 
-    public void processPostPayment(String userId, List<OrderDetail> checkoutOrderDetails);
+    public void processPostPayment(String userId, CartRequestDTO cartRequestDTO);
 }

@@ -2,6 +2,7 @@ package com.assignment.BookStore.controllers;
 
 import com.assignment.BookStore.dtos.requests.CartRequestDTO;
 import com.assignment.BookStore.dtos.responses.CartResponseDTO;
+import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
 import com.assignment.BookStore.services.CartService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,9 @@ public class CartController {
         cartService.clearCart(userId);
     }
 
-//    @PostMapping("/checkout/{userId}")
-//    private void checkout(@PathVariable String userId, @RequestBody CartRequestDTO cartRequestDTO) {
-//        cartService.checkout(userId, cartRequestDTO);
-//    }
+    @PostMapping("/checkout/{userId}")
+    private ResponseEntity<OrderResponseDTO> checkout(@PathVariable String userId, @RequestBody CartRequestDTO cartRequestDTO) throws Exception {
+        return ResponseEntity.ok(cartService.initiateCheckout(userId, cartRequestDTO));
+    }
 }
 
