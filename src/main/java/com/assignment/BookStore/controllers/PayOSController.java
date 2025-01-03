@@ -27,12 +27,12 @@ public class PayOSController {
         this.payOS = payOS;
     }
 
-    @PostMapping(path = "/create")
-    public ObjectNode createPaymentLink(@RequestBody String RequestBody) {
+    @PostMapping(path = "/create/{OrderId}")
+    public ObjectNode createPaymentLink(@PathVariable String OrderId) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         try {
-            final String description = "Thanh toán đơn hàng";
+            final String description = "Thanh toán đơn hàng" + OrderId;
             final String returnUrl = "http://localhost:3000/payment/sucess";
             final String cancelUrl = "http://localhost:3000/payment/cancel";
             final int price = 100000;
