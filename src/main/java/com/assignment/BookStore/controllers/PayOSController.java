@@ -37,8 +37,8 @@ public class PayOSController {
         ObjectNode response = objectMapper.createObjectNode();
         try {
             OrderResponseDTO orderResponseDTO = orderService.getOrderById(orderId);
-            final String returnUrl = "http://localhost:3000/payment/sucess";
-            final String cancelUrl = "http://localhost:3000/payment/cancel";
+            final String returnUrl = "http://localhost:3000/payment/sucess/" + orderId;
+            final String cancelUrl = "http://localhost:3000/payment/cancel" + orderId;
             final int price = orderResponseDTO.getTotalPrice();
             String currentTimeString = String.valueOf(String.valueOf(new Date().getTime()));
             long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
