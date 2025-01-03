@@ -15,7 +15,6 @@ import java.util.List;
 public class Cart {
     @Id
     private String id;
-
     private String userId;
     private List<OrderDetail> orderDetails;
 
