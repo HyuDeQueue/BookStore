@@ -4,6 +4,7 @@ import com.assignment.BookStore.entities.Book;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Getter
 @Setter
@@ -18,10 +19,8 @@ public class BookRequestDTO {
     private Integer currentPrice;
     private Integer stock;
     private String description;
-    private Byte[] imageData;
+    private String imageData;
     private String category;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
     public Book toEntity() {
         Book book = new Book();
@@ -31,10 +30,8 @@ public class BookRequestDTO {
         book.setCurrentPrice(this.currentPrice);
         book.setStock(this.stock);
         book.setDescription(this.description);
-        book.setImageData(this.imageData);
+        book.setImageData(Base64.getDecoder().decode(this.imageData));
         book.setCategory(this.category);
-        book.setCreatedAt(this.createdAt);
-        book.setUpdatedAt(this.updatedAt);
         return book;
     }
 }

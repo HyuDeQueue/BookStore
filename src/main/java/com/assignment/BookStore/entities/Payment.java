@@ -18,7 +18,9 @@ public class Payment {
 
     private String orderId;
     private String transactionId;
+    private String userId;
+    private Integer amount;
     private String status;
-    private LocalDateTime paymentDate;
+    private LocalDateTime paymentDate = LocalDateTime.now();
 }
 

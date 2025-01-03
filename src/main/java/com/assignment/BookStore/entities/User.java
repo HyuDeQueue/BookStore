@@ -23,7 +23,7 @@ public class User {
     private String role;
     private String phone;
     private String address;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
     private String status;
     private String bannedReason;

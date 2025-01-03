@@ -23,9 +23,9 @@ public class Book {
     private Integer currentPrice;
     private Integer stock;
     private String description;
-    private Byte[] imageData;
+    private byte[] imageData;
     private String category;
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 }
 

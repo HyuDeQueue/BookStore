@@ -56,4 +56,11 @@ public class ReviewServiceImpl implements ReviewService {
         }
         reviewRepository.deleteById(Id);
     }
+
+    @Override
+    public Page<ReviewResponseDTO> getReviewsByBookId(String bookId, int page, int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
+        Page<Review> reviews = reviewRepository.findByBookId(bookId, pageable);
+        return reviews.map(ReviewResponseDTO::toDto);
+    }
 }

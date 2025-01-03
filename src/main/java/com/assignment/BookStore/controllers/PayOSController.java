@@ -1,8 +1,12 @@
 package com.assignment.BookStore.controllers;
 
+import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
 import com.assignment.BookStore.entities.OrderDetail;
+import com.assignment.BookStore.services.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -17,28 +21,30 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-
+@RequestMapping("/api/payOs")
+@CrossOrigin("*")
 public class PayOSController {
     private final PayOS payOS;
 
     public PayOSController(PayOS payOS) {
         this.payOS = payOS;
     }
-
-    @PostMapping(path = "/create")
-    public ObjectNode createPaymentLink(@RequestBody String RequestBody) {
+    @Autowired
+    private OrderService orderService;
+    @PostMapping(path = "/{orderId}")
+    public ObjectNode createPaymentLink(@PathVariable("orderId") String orderId) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         try {
-            final String description = "Thanh toán đơn hàng";
-            final String returnUrl = "http://localhost:3000/payment/sucess";
-            final String cancelUrl = "http://localhost:3000/payment/cancel";
-            final int price = 100000;
+            OrderResponseDTO orderResponseDTO = orderService.getOrderById(orderId);
+            final String returnUrl = "http://localhost:3000/payment/sucess/" + orderId;
+            final String cancelUrl = "http://localhost:3000/payment/cancel" + orderId;
+            final int price = orderResponseDTO.getTotalPrice();
             String currentTimeString = String.valueOf(String.valueOf(new Date().getTime()));
             long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
 
 
-            PaymentData paymentData = PaymentData.builder().orderCode(orderCode).description(description).amount(price)
+            PaymentData paymentData = PaymentData.builder().orderCode(orderCode).description(orderId).amount(price)
                     .returnUrl(returnUrl).cancelUrl(cancelUrl).build();
 
             CheckoutResponseData data = payOS.createPaymentLink(paymentData);
@@ -81,7 +87,7 @@ public class PayOSController {
     }
 
     @PutMapping(path = "/{orderId}")
-    public ObjectNode cancelOrder(@PathVariable("orderId") int orderId) {
+    public ObjectNode cancelOrder(@PathVariable("orderId") long orderId) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         try {

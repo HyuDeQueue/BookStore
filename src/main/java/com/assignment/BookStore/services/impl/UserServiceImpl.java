@@ -1,6 +1,7 @@
 package com.assignment.BookStore.services.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.assignment.BookStore.dtos.requests.CreateUserRequestDTO;
 import com.assignment.BookStore.entities.User;
 import com.assignment.BookStore.repositories.UserRepository;
 import com.assignment.BookStore.dtos.jwt.CustomUserDetailsDTO;
@@ -73,8 +74,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        return UserResponseDTO.toDto(userRepository.save(userRequestDTO.toEntity()));
+    public UserResponseDTO createUser(CreateUserRequestDTO createUserRequestDTO) {
+        createUserRequestDTO.setPassword(BCrypt.withDefaults().hashToString(12, createUserRequestDTO.getPassword().toCharArray()));
+        User user = createUserRequestDTO.toEntity();
+        user.setStatus("active");
+        user.setRole("user");
+        return UserResponseDTO.toDto(userRepository.save(user));
     }
 
     @Override

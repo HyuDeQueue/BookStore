@@ -1,6 +1,7 @@
 package com.assignment.BookStore.controllers;
 
 import com.assignment.BookStore.dtos.requests.AuthRequestDTO;
+import com.assignment.BookStore.dtos.requests.CreateUserRequestDTO;
 import com.assignment.BookStore.dtos.requests.UserRequestDTO;
 import com.assignment.BookStore.dtos.responses.AuthResponseDTO;
 import com.assignment.BookStore.dtos.responses.UserResponseDTO;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    private ResponseEntity<UserResponseDTO> register(@RequestBody UserRequestDTO userRequestDto) {
-        return new ResponseEntity<>(userService.createUser(userRequestDto), HttpStatus.CREATED);
+    private ResponseEntity<UserResponseDTO> register(@RequestBody CreateUserRequestDTO createUserRequestDTO) {
+        return new ResponseEntity<>(userService.createUser(createUserRequestDTO), HttpStatus.CREATED);
     }
 }
