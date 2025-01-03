@@ -57,6 +57,11 @@ public class CartServiceImpl implements CartService {
 
         List<OrderDetail> orderDetails = cart.getOrderDetails();
         boolean updated = false;
+        if (orderDetails == null) {
+            orderDetails = new java.util.ArrayList<>();
+            orderDetails.add(new OrderDetail(bookId, 1, bookService.getBookById(bookId).getCurrentPrice()));
+            updated = true;
+        }
 
         for (OrderDetail detail : orderDetails) {
             if (detail.getBookId().equals(bookId)) {
@@ -65,9 +70,8 @@ public class CartServiceImpl implements CartService {
                 break;
             }
         }
-
         if (!updated) {
-            orderDetails.add(new OrderDetail(bookId, 1, null));
+            orderDetails.add(new OrderDetail(bookId, 1, bookService.getBookById(bookId).getCurrentPrice()));
         }
 
         cart.setOrderDetails(orderDetails);
