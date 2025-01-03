@@ -37,7 +37,6 @@ public class PayOSController {
         ObjectNode response = objectMapper.createObjectNode();
         try {
             OrderResponseDTO orderResponseDTO = orderService.getOrderById(orderId);
-            final String description = "Thanh toán đơn hàng" + orderId;
             final String returnUrl = "http://localhost:3000/payment/sucess";
             final String cancelUrl = "http://localhost:3000/payment/cancel";
             final int price = orderResponseDTO.getTotalPrice();
@@ -45,7 +44,7 @@ public class PayOSController {
             long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
 
 
-            PaymentData paymentData = PaymentData.builder().orderCode(orderCode).description(description).amount(price)
+            PaymentData paymentData = PaymentData.builder().orderCode(orderCode).description(orderId).amount(price)
                     .returnUrl(returnUrl).cancelUrl(cancelUrl).build();
 
             CheckoutResponseData data = payOS.createPaymentLink(paymentData);
