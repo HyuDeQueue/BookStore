@@ -4,6 +4,8 @@ import com.assignment.BookStore.dtos.requests.ReviewRequestDTO;
 import com.assignment.BookStore.dtos.responses.ReviewResponseDTO;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface ReviewService {
     ReviewResponseDTO createReview(ReviewRequestDTO reviewRequestDTO);
 
@@ -13,4 +15,7 @@ public interface ReviewService {
 
     ReviewResponseDTO updateReview(String Id, ReviewRequestDTO reviewRequestDTO);
     void deleteReview(String Id);
+
+    Page<ReviewResponseDTO> getReviewsByBookId(String bookId, int page, int limit);
+
 }

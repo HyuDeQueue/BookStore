@@ -44,4 +44,9 @@ public class ReviewController {
     private void deleteReview(@PathVariable String Id) {
         reviewService.deleteReview(Id);
     }
+
+    @GetMapping("/book/{bookId}")
+    private ResponseEntity<Page<ReviewResponseDTO>> getReviewsByBookId(@PathVariable String bookId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+        return ResponseEntity.ok(reviewService.getReviewsByBookId(bookId, page, limit));
+    }
 }
