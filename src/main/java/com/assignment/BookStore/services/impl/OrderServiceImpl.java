@@ -68,4 +68,12 @@ public class OrderServiceImpl implements OrderService {
         }
         orderRepository.deleteById(Id);
     }
+
+    @Override
+    public OrderResponseDTO updateOrderStatus(String Id, String status) {
+        Order order = orderRepository.findById(Id).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found"));
+        order.setStatus(status);
+        return OrderResponseDTO.toDto(orderRepository.save(order));
+    }
 }

@@ -16,4 +16,5 @@ public interface OrderService {
 
     OrderResponseDTO updateOrder(String Id, OrderRequestDTO orderRequestDTO);
     void deleteOrder(String Id);
+    OrderResponseDTO updateOrderStatus(String Id, String status);
 }

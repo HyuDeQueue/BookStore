@@ -51,4 +51,9 @@ public class OrderController {
     private ResponseEntity<List<OrderResponseDTO>> getOrdersByUserId(@PathVariable String userId) {
         return ResponseEntity.ok(orderService.GetOrdersByUserId(userId));
     }
+
+    @PutMapping("/status/{Id}/{status}")
+    private ResponseEntity<OrderResponseDTO> updateOrderStatus(@PathVariable String Id, @PathVariable String status) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(Id, status));
+    }
 }
