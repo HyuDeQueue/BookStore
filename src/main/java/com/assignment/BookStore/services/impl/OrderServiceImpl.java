@@ -24,7 +24,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     @Override
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
-        return OrderResponseDTO.toDto(orderRepository.save(orderRequestDTO.toEntity()));
+        Order order = orderRequestDTO.toEntity();
+        order.setStatus("Created");
+        return OrderResponseDTO.toDto(orderRepository.save(order));
     }
 
     @Override

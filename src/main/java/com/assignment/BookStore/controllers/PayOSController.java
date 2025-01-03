@@ -1,9 +1,12 @@
 package com.assignment.BookStore.controllers;
 
+import com.assignment.BookStore.dtos.responses.OrderResponseDTO;
 import com.assignment.BookStore.entities.OrderDetail;
+import com.assignment.BookStore.services.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -26,16 +29,18 @@ public class PayOSController {
     public PayOSController(PayOS payOS) {
         this.payOS = payOS;
     }
-
-    @PostMapping(path = "/create")
-    public ObjectNode createPaymentLink(@RequestBody String RequestBody) {
+    @Autowired
+    private OrderService orderService;
+    @PostMapping(path = "/{orderId}")
+    public ObjectNode createPaymentLink(@PathVariable("orderId") String orderId) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         try {
-            final String description = "Thanh toán đơn hàng";
+            OrderResponseDTO orderResponseDTO = orderService.getOrderById(orderId);
+            final String description = "Thanh toán đơn hàng" + orderId;
             final String returnUrl = "http://localhost:3000/payment/sucess";
             final String cancelUrl = "http://localhost:3000/payment/cancel";
-            final int price = 100000;
+            final int price = orderResponseDTO.getTotalPrice();
             String currentTimeString = String.valueOf(String.valueOf(new Date().getTime()));
             long orderCode = Long.parseLong(currentTimeString.substring(currentTimeString.length() - 6));
 
