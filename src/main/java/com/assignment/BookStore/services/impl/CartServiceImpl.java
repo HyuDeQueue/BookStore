@@ -45,7 +45,7 @@ public class CartServiceImpl implements CartService {
             Cart cart = new Cart();
             cart.setUserId(userId);
             BookResponseDTO book = bookService.getBookById(bookId);
-            OrderDetail orderDetail = new OrderDetail(bookId, 1, book.getCurrentPrice());
+            OrderDetail orderDetail = new OrderDetail(book.getId(), 1, book.getCurrentPrice());
             List<OrderDetail> orderDetails = new java.util.ArrayList<>();
             orderDetails.add(orderDetail);
             cart.setOrderDetails(orderDetails);
