@@ -40,12 +40,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponseDTO addToCart(String userId, String bookId) {
-        Cart cart = cartRepository.findByUserId(userId)
-                .orElseGet(() -> {
-                    Cart newCart = new Cart();
-                    newCart.setUserId(userId);
-                    return cartRepository.save(newCart);
-                });
+        Boolean exists = cartRepository.existsByUserId(userId);
+        if (!exists) {
+            Cart cart = new Cart();
+            cart.setUserId(userId);
+            BookResponseDTO book = bookService.getBookById(bookId);
+            cart.setOrderDetails(List.of(new OrderDetail(bookId, 1, book.getCurrentPrice())));
+            cartRepository.save(cart);
+            return CartResponseDTO.toDto(cart);
+        }
+        Cart cart = cartRepository.findByUserId(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
 
         List<OrderDetail> orderDetails = cart.getOrderDetails();
         boolean updated = false;
@@ -67,7 +72,6 @@ public class CartServiceImpl implements CartService {
         return CartResponseDTO.toDto(cart);
     }
 
-
     @Override
     public CartResponseDTO removeFromCart(String userId, String bookId) {
         Cart cart = cartRepository.findByUserId(userId)
@@ -83,15 +87,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartResponseDTO getCart(String userId) {
+        Boolean exists = cartRepository.existsByUserId(userId);
+        if (!exists) {
+            Cart cart = new Cart();
+            cart.setUserId(userId);
+            cartRepository.save(cart);
+        }
         Cart cart = cartRepository.findByUserId(userId)
-                .orElseGet(() -> {
-                    Cart newCart = new Cart();
-                    newCart.setUserId(userId);
-                    return cartRepository.save(newCart);
-                });
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
         return CartResponseDTO.toDto(cart);
     }
-
 
     @Override
     public void clearCart(String userId) {
