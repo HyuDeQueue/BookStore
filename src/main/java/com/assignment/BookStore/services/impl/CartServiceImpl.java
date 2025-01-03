@@ -63,11 +63,13 @@ public class CartServiceImpl implements CartService {
             updated = true;
         }
 
-        for (OrderDetail detail : orderDetails) {
-            if (detail.getBookId().equals(bookId)) {
-                detail.setQuantity(detail.getQuantity() + 1);
-                updated = true;
-                break;
+        if(!updated) {
+            for (OrderDetail detail : orderDetails) {
+                if (detail.getBookId().equals(bookId)) {
+                    detail.setQuantity(detail.getQuantity() + 1);
+                    updated = true;
+                    break;
+                }
             }
         }
         if (!updated) {
